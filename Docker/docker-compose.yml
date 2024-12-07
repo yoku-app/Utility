@@ -11,7 +11,7 @@ services:
       - mongodb_data:/data/db
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_ROOT_PASSWORD: example
 
   redis:
     image: redis:latest
@@ -79,10 +79,50 @@ services:
     depends_on:
       - spark-master
 
+  supertokens:
+    image: registry.supertokens.io/supertokens/supertokens-postgresql:9.3.0
+    container_name: supertokens
+    depends_on:
+      - postgresql
+    ports:
+      - "3567:3567"
+    environment:
+      POSTGRESQL_CONNECTION_URI: "postgresql://root:password@postgresql:5432/Yoku"
+    networks:
+      - app_network
+    restart: unless-stopped
+    healthcheck:
+      test: >
+        bash -c 'exec 3<>/dev/tcp/127.0.0.1/3567 && echo -e "GET /hello HTTP/1.1\r\nhost: 127.0.0.1:3567\r\nConnection: close\r\n\r\n" >&3 && cat <&3 | grep "Hello"'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  postgresql:
+    image: postgres:latest
+    container_name: postgresql
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: Yoku
+    volumes:
+      - postgresql_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+    ports:
+      - "5432:5432"
+
+networks:
+  app_network:
+    driver: bridge
+
 volumes:
   mongodb_data:
     driver: local
   redis_data:
     driver: local
   cassandra_data:
+    driver: local
+  postgresql_data:
     driver: local
