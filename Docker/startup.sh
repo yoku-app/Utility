@@ -5,4 +5,4 @@
 
 set -e
 
-docker-compose up -d
+docker-compose -p yoku_docker up -d

@@ -1,0 +1,3 @@
+-   Seperate SQL Files into "Tickets"
+-   Put tickets into associated versioning release
+-   Add SQL Content into "release-script" in logical order
