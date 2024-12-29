@@ -8,6 +8,8 @@ create table public.user_profiles (
   display_name text not null,
   avatar_url text,
   DOB date,
+  created_at timestamp not null default now(),
+  updated_at timestamp not null default now(),
   respondant_onboarding_completion timestamp,
   creator_onboarding_completion timestamp
 );
@@ -15,7 +17,7 @@ create table public.user_profiles (
 alter table public.user_profiles enable row level security;
 create index idx_profiles_user_id on public.user_profiles(user_id);
 
-create function public.handle_new_user()
+create or replace function public.handle_new_user()
 returns trigger
 language plpgsql
 security definer set search_path = ''
@@ -36,3 +38,16 @@ $$;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+    NEW.updated_at = now();
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER set_updated_at
+BEFORE UPDATE ON public.user_profile
+FOR EACH ROW
+EXECUTE FUNCTION update_updated_at_column();
