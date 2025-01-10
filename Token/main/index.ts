@@ -46,16 +46,6 @@ const fetchAccessToken = async (
     return { token: access_token, expiration };
 };
 
-async function logout(client: SupabaseClient) {
-    const { error } = await client.auth.signOut();
-
-    if (error) {
-        throw new Error(`Logout failed: ${error.message}`);
-    }
-
-    console.log("Logged out successfully.");
-}
-
 function saveToken(token: string, expiration: string) {
     const tokenData = `${token},${expiration}`;
     fs.writeFileSync(TOKEN_FILE, tokenData);
@@ -70,7 +60,6 @@ async function main() {
         console.log("Login successful.");
 
         saveToken(token, expiration);
-        await logout(client);
     } catch (error) {
         console.error("Error:", error);
     }
