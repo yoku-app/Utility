@@ -1,0 +1,25 @@
+meta {
+  name: Image Resize
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{CORE_API_URL}}image/transform
+  body: multipartForm
+  auth: bearer
+}
+
+headers {
+  Content-Type: multipart/form-data
+}
+
+auth:bearer {
+  token: 
+}
+
+body:multipart-form {
+  image: @file(/Users/jtucker/Documents/Test Image Files/DNd.jpg)
+  format: jpeg
+  crop: {"width": 200, "height": 1100, "top": 100, "left": 20}
+}

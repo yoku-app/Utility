@@ -10,8 +10,8 @@ create table public.user_profiles (
   DOB date,
   created_at timestamp not null default now(),
   updated_at timestamp not null default now(),
-  respondant_onboarding_completion timestamp,
-  creator_onboarding_completion timestamp
+  respondent_onboarding_completion timestamp,
+  creator_onboarding_completion timestamp,
 );
 
 alter table public.user_profiles enable row level security;

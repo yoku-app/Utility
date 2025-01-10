@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "@supabase/supabase-js": "^2.47.12",
+    "@types/luxon": "^3.4.2",
+    "dotenv": "^16.4.7",
+    "luxon": "^3.5.0",
+    "ts-node": "^10.9.2"
+  }
+}

@@ -1,0 +1,11 @@
+meta {
+  name: Transmute Service Health Check
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{CORE_API_URL}}p/image/health
+  body: none
+  auth: none
+}
