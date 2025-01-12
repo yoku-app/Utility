@@ -30,15 +30,15 @@ echo "Access Token: $ACCESS_TOKEN"
 # Copy the access token to the clipboard
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   # For Linux, use xclip or xsel
-  echo -n "$ACCESS_TOKEN" | xclip -selection clipboard
+  echo "$ACCESS_TOKEN" | xclip -selection clipboard
   echo "Access token copied to clipboard."
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # For macOS, use pbcopy
-  echo -n "$ACCESS_TOKEN" | pbcopy
+  echo "$ACCESS_TOKEN" | pbcopy
   echo "Access token copied to clipboard."
 elif [[ "$OSTYPE" == "cygwin" || "$OSTYPE" == "msys" ]]; then
   # For Windows (Git Bash), use clip
-  echo -n "$ACCESS_TOKEN" | clip
+  echo "$ACCESS_TOKEN" | clip
   echo "Access token copied to clipboard."
 else
   echo "Unsupported OS. Could not copy to clipboard."

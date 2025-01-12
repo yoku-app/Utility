@@ -28,7 +28,7 @@ begin
     new.id, 
     new.email,
     coalesce(new.raw_user_meta_data ->> 'name', ''), 
-    coalesce(new.raw_user_meta_data ->> 'avatar_url', '')
+    coalesce(new.raw_user_meta_data ->> 'avatar_url', null)
   );
   return new;
 end;

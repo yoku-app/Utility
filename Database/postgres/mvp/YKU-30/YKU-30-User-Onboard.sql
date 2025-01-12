@@ -1,4 +1,4 @@
-alter table public.user_profiles add column main_focus text check (main_focus in ('creator', 'respondent', 'hybrid'));
+alter table public.user_profiles add column main_focus text check (main_focus in ('CREATOR', 'RESPONDENT', 'HYBRID'));
 alter table public.user_profiles add column phone text;
 
 create or replace function public.handle_phone_confirmation()
